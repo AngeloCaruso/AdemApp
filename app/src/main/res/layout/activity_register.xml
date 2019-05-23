@@ -22,21 +22,12 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
         <EditText
-            android:id="@+id/txtNewName"
+            android:id="@+id/txtNewUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:ems="10"
-            android:hint="Name"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/txtNewLastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:ems="10"
-            android:hint="LastName"
+            android:hint="Username"
             android:inputType="textPersonName" />
 
         <EditText

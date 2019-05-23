@@ -15,13 +15,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-
 public class Register extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
-    private EditText txtName,txtLastName, txtEmail, txtPass;
+    private EditText txtNewUsername, txtEmail, txtPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +29,7 @@ public class Register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        txtName = (EditText)findViewById(R.id.txtNewName);
-        txtLastName = (EditText)findViewById(R.id.txtNewLastName);
+        txtNewUsername = (EditText)findViewById(R.id.txtNewUsername);
         txtEmail = (EditText)findViewById(R.id.txtNewEmail);
         txtPass = (EditText)findViewById(R.id.txtNewPass);
     }
@@ -46,8 +43,7 @@ public class Register extends AppCompatActivity {
 
     public void registerUser(View view){
 
-        final String name = txtName.getText().toString();
-        final String lastName = txtLastName.getText().toString();
+        final String username = txtNewUsername.getText().toString();
         final String email = txtEmail.getText().toString();
         String password = txtPass.getText().toString();
 
@@ -58,9 +54,8 @@ public class Register extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             String id = mAuth.getCurrentUser().getUid();
-                            User newUser = new User(email, id);
-                            newUser.setName(name);
-                            newUser.setLastName(lastName);
+                            User newUser = new User(username, email, id);
+                            newUser.setUsername(username);
                             addUserToDB(newUser);
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

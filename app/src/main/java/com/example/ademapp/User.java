@@ -2,27 +2,12 @@ package com.example.ademapp;
 
 public class User {
 
-    private String name = null, lastName = null, username = null, email, id;
+    private String username, email, id;
 
-    public User(String email, String id) {
+    public User(String username, String email, String id) {
+        this.username = username;
         this.email = email;
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getUsername() {
@@ -48,5 +33,4 @@ public class User {
     public void setId(String id) {
         this.id = id;
     }
-
 }

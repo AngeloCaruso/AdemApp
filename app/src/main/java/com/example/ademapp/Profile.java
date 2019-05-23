@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Profile extends AppCompatActivity {
 
-    private TextView viewName, viewEmail, viewID;
+    private TextView viewUsername, viewEmail, viewID;
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -19,7 +19,7 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        viewName = (TextView)findViewById(R.id.viewName);
+        viewUsername = (TextView)findViewById(R.id.viewUsername);
         viewEmail = (TextView)findViewById(R.id.viewEmail);
         viewID = (TextView)findViewById(R.id.viewID);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -41,11 +41,10 @@ public class Profile extends AppCompatActivity {
     }
 
     private void setUserProfile(FirebaseUser user) {
-        viewName.setText(user.getDisplayName());
+        viewUsername.setText(user.getDisplayName());
         viewEmail.setText(user.getEmail());
         viewID.setText(user.getUid());
     }
-
 
     public void updateUser(View view){
 

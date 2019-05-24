@@ -75,24 +75,23 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
         firebaseAuthListener =  new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null){
                     final DatabaseReference userRef = firebaseDatabase.getReference("usuarios").child(user.getUid());
                     ValueEventListener eventListener = new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            System.out.println(dataSnapshot.getValue());
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
                             if(!dataSnapshot.exists()){
-                                User newUser = new User(user.getEmail(), user.getUid());
-                                newUser.setUsername(user.getDisplayName());
+                                User newUser = new User(user.getDisplayName(), user.getEmail(), user.getUid());
                                 userRef.setValue(newUser);
                             }
 
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        public void onCancelled(DatabaseError databaseError) {
 
                         }
                     };
@@ -118,7 +117,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == successAuthCode){

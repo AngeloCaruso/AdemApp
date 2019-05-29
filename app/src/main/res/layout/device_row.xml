@@ -13,8 +13,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="10dp">
+            android:padding="5dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -31,26 +32,27 @@
                         android:layout_width="175dp"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
-                        android:text="Device name" />
+                        android:text="@string/dev_name" />
 
                     <TextView
                         android:id="@+id/dispType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Type" />
+                        android:text="@string/dev_type" />
 
                     <TextView
                         android:id="@+id/dispCode"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:paddingLeft="5dp"
-                        android:text="Code" />
+                        android:text="@string/dev_type" />
 
                 </LinearLayout>
 
                 <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"></com.github.mikephil.charting.charts.LineChart>
 

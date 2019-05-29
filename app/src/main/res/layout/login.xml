@@ -36,7 +36,7 @@
             android:layout_marginTop="25dp"
             android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:text="Ingresa"
+            android:text="@string/login"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
         <EditText
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:ems="10"
-            android:hint="Correo"
+            android:hint="@string/user_email"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:ems="10"
-            android:hint="Contraseña"
+            android:hint="@string/user_password"
             android:inputType="textPassword" />
 
         <Button
@@ -63,7 +63,7 @@
             android:layout_height="64dp"
             android:layout_marginBottom="20dp"
             android:onClick="normalLogin"
-            android:text="Entrar" />
+            android:text="@string/sign_in" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/loginBtn"
@@ -89,7 +89,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¿No tienes cuenta?" />
+                android:text="@string/register_msg" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:onClick="openRegisterScreen"
-                android:text="Registrate"
+                android:text="@string/register_link"
                 android:textColor="@android:color/holo_blue_light" />
 
         </LinearLayout>

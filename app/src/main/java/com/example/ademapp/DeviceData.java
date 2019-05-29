@@ -9,7 +9,4 @@ public class DeviceData {
     public static void save(Device c){
         devices.add(c);
     }
-    public static ArrayList<Device> getContacts(){
-        return devices;
-    }
 }

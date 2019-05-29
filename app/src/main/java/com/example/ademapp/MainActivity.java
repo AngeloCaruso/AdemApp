@@ -1,9 +1,14 @@
 package com.example.ademapp;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
+import android.service.autofill.Dataset;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,8 +20,17 @@ import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ademapp.fragments.HomeFragment;
+import com.example.ademapp.fragments.ProfileFragment;
+import com.example.ademapp.fragments.SettingsFragment;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -32,29 +46,33 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener,
+        HomeFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener{
 
-    private RecyclerView devicesList;
     private GoogleApiClient googleApiClient;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
     private FirebaseDatabase firebaseDatabase;
-    private ArrayList<Device> devices;
-    private DeviceAdapter adapter;
-    private LinearLayoutManager layoutManager;
+    private TextView navUser, navEmail;
+    private ImageView navImg;
+    private Resources resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        devicesList = (RecyclerView)findViewById(R.id.recyclerView);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View navView = navigationView.getHeaderView(0);
+        navUser = (TextView)navView.findViewById(R.id.navUser);
+        navEmail = (TextView)navView.findViewById(R.id.navEmail);
+        navImg = (ImageView)navView.findViewById(R.id.navImg);
         Toolbar toolbar = findViewById(R.id.toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -73,6 +91,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -84,10 +103,12 @@ public class MainActivity extends AppCompatActivity
 
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null){
-                    getUserDevices(user);
+                    Fragment fragment = new HomeFragment();
+                    getSupportFragmentManager().beginTransaction().add(R.id.main, fragment).commitAllowingStateLoss();
+                    setNavUser(user);
                 }else{
                     openLoginScreen();
                 }
@@ -95,35 +116,28 @@ public class MainActivity extends AppCompatActivity
         };
     }
 
-    private void attachDevice() {
-        AttachDeviceDialog dialog = new AttachDeviceDialog();
-        dialog.show(getSupportFragmentManager(), "serial dialog");
-    }
-
-    private void getUserDevices(FirebaseUser user) {
-        final String id = user.getUid();
-        DatabaseReference userRef = firebaseDatabase.getReference("devices");
-        userRef.orderByChild("owner").equalTo(id).addValueEventListener(new ValueEventListener() {
+    private void setNavUser(FirebaseUser user) {
+        String id = user.getUid();
+        DatabaseReference userRef = firebaseDatabase.getReference("usuarios/"+id);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                devices = new ArrayList<>();
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    String name = data.child("name").getValue().toString();
-                    String type = data.child("type").getValue().toString();
-                    String code = data.child("code").getValue().toString();
-                    devices.add(new Device(name, type, code));
-                }
-                adapter = new DeviceAdapter(MainActivity.this, devices);
-                layoutManager = new LinearLayoutManager(MainActivity.this);
-                devicesList.setLayoutManager(layoutManager);
-                devicesList.setAdapter(adapter);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String username = dataSnapshot.child("username").getValue().toString();
+                String email = dataSnapshot.child("email").getValue().toString();
+                navUser.setText(username);
+                navEmail.setText(email);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+    }
+
+    private void attachDevice() {
+        AttachDeviceDialog dialog = new AttachDeviceDialog();
+        dialog.show(getSupportFragmentManager(), "serial dialog");
     }
 
     @Override
@@ -163,30 +177,40 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        Fragment fragment = null;
+        boolean fragmentSelected = false;
 
-        } else if (id == R.id.nav_gallery) {
-
-            Intent intent = new Intent(this, Profile.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-
-        } else if (id == R.id.nav_tools) {
-
-        }else if (id == R.id.nav_send) {
-            firebaseAuth.signOut();
-            Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-                @Override
-                public void onResult(@NonNull Status status) {
-                    if(status.isSuccess()){
-                        openLoginScreen();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "Error al salir", Toast.LENGTH_SHORT).show();
+        switch (id){
+            case R.id.nav_home:
+                fragment = new HomeFragment();
+                fragmentSelected = true;
+                break;
+            case R.id.nav_profile:
+                fragment = new ProfileFragment();
+                fragmentSelected = true;
+                break;
+            case R.id.nav_settings:
+                fragment = new SettingsFragment();
+                fragmentSelected = true;
+                break;
+            case R.id.nav_exit:
+                firebaseAuth.signOut();
+                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        if(status.isSuccess()){
+                            openLoginScreen();
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Error al salir", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-            });
+                });
+                break;
         }
 
+        if (fragmentSelected){
+            getSupportFragmentManager().beginTransaction().replace(R.id.main, fragment).commit();
+        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -203,4 +227,8 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

@@ -6,20 +6,20 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/nav_home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@android:drawable/ic_menu_myplaces"
-            android:title="Perfil" />
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="@string/nav_profile" />
         <item
-            android:id="@+id/nav_tools"
+            android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Configuracion" />
+            android:title="@string/nav_settings" />
         <item
-            android:id="@+id/nav_send"
-            android:icon="@android:drawable/ic_delete"
-            android:title="Cerrar sesion" />
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_keyboard_return_black_24dp"
+            android:title="@string/nav_exit" />
     </group>
 
 </menu>

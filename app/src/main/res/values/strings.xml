@@ -15,4 +15,60 @@
     <string name="menu_send" translatable="false">Send</string>
 
 
+
+    <string-array name="dev_type">
+        <item>@string/type1</item>
+        <item>@string/type2</item>
+        <item>@string/type3</item>
+        <item>@string/type4</item>
+        <item>@string/type5</item>
+        <item>@string/type6</item>
+    </string-array>
+
+    <string name="type1">Tv</string>
+    <string name="type2">Freezer</string>
+    <string name="type3">Microwave</string>
+    <string name="type4">Pc</string>
+    <string name="type5">Blender</string>
+    <string name="type6">Washing machine</string>
+
+    <string name="dev_name">Device name</string>
+    <string name="dev_code">Code</string>
+    <string name="dev_type">Device type</string>
+    <string name="dev_update">Update</string>
+
+    <string name="user_username">Username</string>
+    <string name="user_email">Email</string>
+    <string name="user_id">Id</string>
+    <string name="user_pass">Old password</string>
+    <string name="user_newPass">New password</string>
+    <string name="user_password">Password</string>
+    <string name="user_update">Update profile</string>
+    <string name="user_updatePass">Update password</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_exit">Exit</string>
+
+    <string name="sign_up">Sign up with your email</string>
+    <string name="sign_go">Sign up</string>
+
+    <string name="login">Login</string>
+    <string name="sign_in">Sign in</string>
+
+    <string name="register_msg">You dont have an account?</string>
+    <string name="register_link">Sign up</string>
+
+    <string name="login_err">Please fill all the fields</string>
+    <string name="success_update_user">Username updated</string>
+    <string name="success_update_pass">Password changed</string>
+    <string name="fail_update_pass">Error in password change</string>
+    <string name="fail_current_pass">Wrong current password</string>
+    <string name="dialog_tittle">Add device</string>
+
+    <string name="add_serial">Add</string>
+    <string name="cancel_serial">Cancel</string>
+
+
 </resources>

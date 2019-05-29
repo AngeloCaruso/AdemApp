@@ -47,26 +47,30 @@ public class Register extends AppCompatActivity {
         final String email = txtEmail.getText().toString();
         String password = txtPass.getText().toString();
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+        if(username.isEmpty() || email.isEmpty() || password.isEmpty()){
+            Toast.makeText(this, R.string.login_err, Toast.LENGTH_SHORT).show();
+        }else {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
 
-                            String id = mAuth.getCurrentUser().getUid();
-                            User newUser = new User(username, email, id);
-                            newUser.setUsername(username);
-                            addUserToDB(newUser);
+                                String id = mAuth.getCurrentUser().getUid();
+                                User newUser = new User(username, email, id);
+                                newUser.setUsername(username);
+                                addUserToDB(newUser);
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Error al registrar", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Error al registrar", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
-
-                    }
-                });
+                    });
+        }
     }
 
     public void addUserToDB(User user){

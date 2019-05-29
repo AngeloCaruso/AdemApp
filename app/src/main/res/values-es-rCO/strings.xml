@@ -1,4 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AdemApp</string>
+    <string name="type1">Televisor</string>
+    <string name="type2">Nevera</string>
+    <string name="type3">Microondas</string>
+    <string name="type4">Computador</string>
+    <string name="type5">Licuadora</string>
+    <string name="type6">Lavadora</string>
+    <string name="dev_name">Nombre del dispositivo</string>
+    <string name="dev_code">Codigo</string>
+    <string name="dev_type">Tipo de dispositivo</string>
+    <string name="dev_update">Actualizar</string>
+    <string name="user_email">Correo electrónico</string>
+    <string name="user_id">Identificación</string>
+    <string name="user_newPass">Nueva contraseña</string>
+    <string name="user_pass">Contraseña antigua</string>
+    <string name="user_username">Usuario</string>
+    <string name="user_update">Actualizar perfil</string>
+    <string name="user_updatePass">Cambiar contraseña</string>
+    <string name="nav_exit">Cerrar sesion</string>
+    <string name="nav_home">Principal</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="nav_settings">Configuración</string>
+    <string name="sign_go">Registrarse</string>
+    <string name="sign_in">Ingresar</string>
+    <string name="sign_up">Registrate con tu correo electrónico</string>
+    <string name="login">Ingresa</string>
+    <string name="user_password">Contraseña</string>
+    <string name="register_msg">¿No tienes cuenta?</string>
+    <string name="register_link">Registrate</string>
+    <string name="login_err">Por favor llene todos los campos</string>
+    <string name="success_update_user">Nombre de usuario actualizado</string>
+    <string name="success_update_pass">Contraseña actualizada</string>
+    <string name="fail_current_pass">Contraseña actual incorrecta</string>
+    <string name="fail_update_pass">No se pudo cambiar la contraseña</string>
+    <string name="dialog_tittle">Asignar dispositivo</string>
+    <string name="add_serial">Añadir</string>
+    <string name="cancel_serial">Cancelar</string>
 </resources>

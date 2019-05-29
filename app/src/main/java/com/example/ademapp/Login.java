@@ -150,18 +150,21 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
         String email = txtEmail.getText().toString();
         String password = txtPass.getText().toString();
-
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            openMainScreen();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Error de credenciales", Toast.LENGTH_SHORT).show();
+        if(email.isEmpty() || password.isEmpty()){
+            Toast.makeText(this, R.string.login_err, Toast.LENGTH_SHORT).show();
+        }else {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                openMainScreen();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Error de credenciales", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     private void openMainScreen() {

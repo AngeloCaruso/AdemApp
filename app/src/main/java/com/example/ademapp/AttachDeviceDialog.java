@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,15 +33,19 @@ public class AttachDeviceDialog extends AppCompatDialogFragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference ref = firebaseDatabase.getReference("devices");
         builder.setView(view)
-                .setTitle("Add serial")
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.dialog_tittle)
+                .setPositiveButton(R.string.add_serial, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String code = txtCode.getText().toString();
-                        asignDeviceToUSer(ref, code);
+                        if(code.isEmpty()){
+                            Toast.makeText(getContext(), R.string.login_err, Toast.LENGTH_SHORT).show();
+                        }else{
+                            asignDeviceToUSer(ref, code);
+                        }
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel_serial, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 

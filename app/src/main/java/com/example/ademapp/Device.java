@@ -1,8 +1,13 @@
 package com.example.ademapp;
 
 
+import com.github.mikephil.charting.data.Entry;
+
+import java.util.ArrayList;
+
 public class Device {
     private String name, type, code;
+    private ArrayList<Entry> data;
     private boolean active;
 
     public Device(String name, String type, String code) {
@@ -41,6 +46,14 @@ public class Device {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public ArrayList<Entry> getData() {
+        return data;
+    }
+
+    public void setData(ArrayList<Entry> data) {
+        this.data = data;
     }
 
     public void save(){
